@@ -14,7 +14,7 @@ The following image depicts the architecture of the platform:
 
 The architecture is based on the Command Query Separation model (CQRS). The IoT gateway
 acts as a command service, being a producer of Kafka. The Statistics service acts as a
-query service, being a consumer of Kafka. The advantages to this model is that both services
+query service, being a consumer of Kafka. The advantages to this model are that both services
 can be scaled separately and can employ their own domain model.
 
 # Requirements
@@ -62,7 +62,7 @@ A sample authentication token is printed in the server logs of the 'statistics' 
 # Limitations
 
 Although the platform provides a good base and demonstrates the CQRS model well, it is not production-ready 
-and has several limitation. Most of these limitations are easy to overcome.
+and has several limitations. Most of these limitations are not difficult to overcome or require little effort.
 
 **IoT devices**
 - The devices themselves are a gross oversimplification of their real life representations. They only focus on emitting 
@@ -72,12 +72,14 @@ and has several limitation. Most of these limitations are easy to overcome.
 **IoT gateway**
 - The command sent by the IoT gateway are themselves not sent to Kafka. This means that there is
   a small opportunity for the command to be lost if the instance crashes before producing the event.
+- Although this service can be scaled as well, some extra configuration is needed in nginx to create a reverse proxy so
+  that the IoT devices are able to communicate with the load balancer.
 
 **Statistics**
 - Security is handled by means of JWT tokens. No authentication server is provided however, which means tokens can not be 
   generated through an API. A sample token is provided on startup and printed on the command line.
 - Event data consumed from Kafka is stored in an in-memory repository. Although it will take a while for the instance 
-  to go out of memory, it will eventually. Furthermore, the more event data is collected, the worse the queries will
+  to go out of memory, it eventually will. Furthermore, the more event data is collected, the worse the queries will
   perform. Due to the prototype nature of this implementation, this will not be a viable production-ready solution.
   A better approach would be to store the event data in a NoSQL column store such as _Cassandra_ or a document store
   such as _Elasticsearch_. To keep this implementation as lightweight as possible, while still demonstrating the power
