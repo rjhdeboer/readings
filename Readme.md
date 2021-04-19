@@ -40,13 +40,23 @@ Notes:
 - nginx takes a few seconds (10-20) to start up. The statistics endpoint might not be available 
   until then.
 
-To retrieve statistics about the various readings taken:\
+To retrieve statistics about the various readings taken for a group of sensors of type and category:\
 `GET http://localhost:4000/statistics?type=[TYPE]&category=[CATEGORY]&from=[FROM]&until=[UNTIL]`
 
 |PARAM|DESCRIPTION|ALLOWED VALUES|
 |---|---|---|
 |type|Type of sensor|TEMPERATURE, FUEL, HEART_RATE|
 |category|Category of sensors|ENVIRONMENTAL, MEDICAL, TRANSPORTATION|
+|from|Timestamp boundary (in milliseconds) from which the reading was taken|Ex. 1618647849594|
+|until|Timestamp boundary (in milliseconds) from which the reading was taken|Ex. 1618647849594|
+
+To retrieve statistics about the various readings taken for a specific sensor and type:\
+`GET http://localhost:4000/statistics?sensorId=[ID]type=[TYPE]&from=[FROM]&until=[UNTIL]`
+
+|PARAM|DESCRIPTION|ALLOWED VALUES|
+|---|---|---|
+|sensorId|Id of the sensor|car_mom, car_dad, car_brother, thermostat_1, heartrate_1|
+|type|Type of sensor|TEMPERATURE, FUEL, HEART_RATE|
 |from|Timestamp boundary (in milliseconds) from which the reading was taken|Ex. 1618647849594|
 |until|Timestamp boundary (in milliseconds) from which the reading was taken|Ex. 1618647849594|
 
