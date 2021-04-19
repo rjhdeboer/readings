@@ -8,9 +8,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Thermostat extends IotDevice {
 
+    public Thermostat(String sensorId) {
+        super(sensorId);
+    }
+
     public Reading takeReading() {
         BigDecimal value = BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(18.0d, 22.0d))
                 .setScale(2, RoundingMode.HALF_UP);
-        return new Reading(ReadingType.TEMPERATURE, ReadingType.TEMPERATURE.getCategory(), value, System.currentTimeMillis());
+        return new Reading(getSensorId(), ReadingType.TEMPERATURE, ReadingType.TEMPERATURE.getCategory(), value, System.currentTimeMillis());
     }
 }

@@ -31,13 +31,13 @@ public class FetchReadingStatisticsQueryProcessorTest {
 
     @Test
     public void shouldHandleQueryWithTypeAndCategory() {
-        FetchReadingStatisticsQuery query = new FetchReadingStatisticsQuery("fuel", "transportation", 1L, 10L);
+        FetchReadingStatisticsQuery query = new FetchReadingStatisticsQuery(null, "fuel", "transportation", 1L, 10L);
         List<Reading> readings = Arrays.asList(
-            new Reading("fuel", "transportation", new BigDecimal("1.00"), 1L),
-            new Reading("fuel", "transportation", new BigDecimal("2.00"), 2L),
-            new Reading("fuel", "transportation", new BigDecimal("3.00"), 3L),
-            new Reading("fuel", "transportation", new BigDecimal("4.00"), 4L),
-            new Reading("fuel", "transportation", new BigDecimal("5.00"), 5L)
+            new Reading("car_1", "fuel", "transportation", new BigDecimal("1.00"), 1L),
+            new Reading("car_1", "fuel", "transportation", new BigDecimal("2.00"), 2L),
+            new Reading("car_1", "fuel", "transportation", new BigDecimal("3.00"), 3L),
+            new Reading("car_1", "fuel", "transportation", new BigDecimal("4.00"), 4L),
+            new Reading("car_1", "fuel", "transportation", new BigDecimal("5.00"), 5L)
         );
 
         when(repository.findReadingsByTypeAndCategoryAndBetween(query.getType(), query.getCategory(), query.getFrom(),
@@ -51,13 +51,32 @@ public class FetchReadingStatisticsQueryProcessorTest {
     }
 
     @Test
-    public void shouldReturnAppropriateMedian() {
-        FetchReadingStatisticsQuery query = new FetchReadingStatisticsQuery("fuel", "transportation", 1L, 10L);
+    public void shouldHandleQueryWithSensorId() {
+        FetchReadingStatisticsQuery query = new FetchReadingStatisticsQuery("car_1", null, null, 1L, 10L);
         List<Reading> readings = Arrays.asList(
-                new Reading("fuel", "transportation", new BigDecimal("1.00"), 1L),
-                new Reading("fuel", "transportation", new BigDecimal("2.00"), 2L),
-                new Reading("fuel", "transportation", new BigDecimal("3.00"), 3L),
-                new Reading("fuel", "transportation", new BigDecimal("4.00"), 4L)
+                new Reading("car_1", "fuel", "transportation", new BigDecimal("1.00"), 1L),
+                new Reading("car_1", "fuel", "transportation", new BigDecimal("2.00"), 2L),
+                new Reading("car_1", "fuel", "transportation", new BigDecimal("3.00"), 3L)
+        );
+
+        when(repository.findReadingsBySensorIdAndTypeAndBetween(query.getSensorId(), query.getType(), query.getFrom(),
+                query.getUntil())).thenReturn(readings);
+
+        ReadingStatistics statistics = processor.handle(query);
+        assertEquals(new BigDecimal("1.00"), statistics.getMin());
+        assertEquals(new BigDecimal("3.00"), statistics.getMax());
+        assertEquals(new BigDecimal("2.00"), statistics.getAverage());
+        assertEquals(new BigDecimal("2.00"), statistics.getMedian());
+    }
+
+    @Test
+    public void shouldReturnAppropriateMedian() {
+        FetchReadingStatisticsQuery query = new FetchReadingStatisticsQuery(null, "fuel", "transportation", 1L, 10L);
+        List<Reading> readings = Arrays.asList(
+                new Reading("car_1", "fuel", "transportation", new BigDecimal("1.00"), 1L),
+                new Reading("car_1", "fuel", "transportation", new BigDecimal("2.00"), 2L),
+                new Reading("car_1", "fuel", "transportation", new BigDecimal("3.00"), 3L),
+                new Reading("car_1", "fuel", "transportation", new BigDecimal("4.00"), 4L)
         );
 
         when(repository.findReadingsByTypeAndCategoryAndBetween(query.getType(), query.getCategory(), query.getFrom(),

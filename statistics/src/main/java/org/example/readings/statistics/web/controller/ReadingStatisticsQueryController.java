@@ -21,15 +21,16 @@ public class ReadingStatisticsQueryController {
 
     @GetMapping(value = "/statistics")
     @PreAuthorize("hasRole('ROLE_ANALIST')")
-    public ReadingStatistics fetchReadingStatistics(@RequestParam(required = false) String type,
+    public ReadingStatistics fetchReadingStatistics(@RequestParam(required = false) String sensorId,
+                                                    @RequestParam(required = false) String type,
                                                     @RequestParam(required = false) String category,
                                                     @RequestParam long from,
                                                     @RequestParam long until)
             throws MissingServletRequestParameterException {
-        if (type == null && category == null) {
-            throw new MissingServletRequestParameterException("type|category", "String");
+        if (sensorId == null && type == null && category == null) {
+            throw new MissingServletRequestParameterException("sensorId|type|category", "String");
         }
 
-        return queryProcessor.handle(new FetchReadingStatisticsQuery(type, category, from, until));
+        return queryProcessor.handle(new FetchReadingStatisticsQuery(sensorId, type, category, from, until));
     }
 }

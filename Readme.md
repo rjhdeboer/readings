@@ -12,12 +12,13 @@ The following image depicts the architecture of the platform:
 
 ![Architecture](architecture.png)
 
-The architecture is based on the Command Query Separation model (CQRS). The IoT gateway
+The architecture is based on the Command Query Responsibility Segregation model (CQRS). The IoT gateway
 acts as a command service, being a producer of Kafka. The Statistics service acts as a
 query service, being a consumer of Kafka. The advantages to this model are that both services
 can be scaled separately and can employ their own domain model.
 
 # Requirements
+- Java 15 (https://openjdk.java.net)
 - Maven (http://maven.apache.org)
 - Docker (http://www.docker.com)
 

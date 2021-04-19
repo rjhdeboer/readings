@@ -26,7 +26,7 @@ public class ReadingCommandController {
     @PostMapping(value = "/readings")
     public void addReading(@RequestBody @Valid ReadingDto reading) {
         logger.info("Received reading: " + reading);
-        commandProcessor.process(new AddReadingCommand(reading.getType(), reading.getCategory(), reading.getValue(),
-                reading.getTakenAt()));
+        commandProcessor.process(new AddReadingCommand(reading.getSensorId(), reading.getType(), reading.getCategory(),
+                reading.getValue(), reading.getTakenAt()));
     }
 }

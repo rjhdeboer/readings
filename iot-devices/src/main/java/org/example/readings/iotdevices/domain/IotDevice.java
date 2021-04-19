@@ -7,6 +7,12 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class IotDevice {
 
+    private final String sensorId;
+
+    IotDevice(String sensorId) {
+        this.sensorId = sensorId;
+    }
+
     abstract Reading takeReading();
 
     public void startEmittingReadings(ScheduledExecutorService scheduler,
@@ -15,5 +21,9 @@ public abstract class IotDevice {
         scheduler.scheduleAtFixedRate(() -> {
             restTemplate.postForObject(iotGatewayEndpointUrl, takeReading(), String.class);
         }, 0, 1, TimeUnit.SECONDS);
+    }
+
+    public String getSensorId() {
+        return sensorId;
     }
 }

@@ -33,7 +33,7 @@ public class AddReadingCommandProcessorTest {
 
     @Test
     public void shouldProcessCommand() {
-        AddReadingCommand command = new AddReadingCommand("fuel", "transportation", BigDecimal.TEN, 1L);
+        AddReadingCommand command = new AddReadingCommand("car_1", "fuel", "transportation", BigDecimal.TEN, 1L);
 
         commandProcessor.process(command);
 
@@ -44,6 +44,7 @@ public class AddReadingCommandProcessorTest {
         ReadingAddedEvent event = (ReadingAddedEvent) producerRecord.value();
         assertNotNull(event.getId());
         assertEquals("1", event.getVersion());
+        assertEquals(command.getSensorId(), event.getSensorId());
         assertEquals(command.getType(), event.getType());
         assertEquals(command.getCategory(), event.getCategory());
         assertEquals(command.getValue(), event.getValue());

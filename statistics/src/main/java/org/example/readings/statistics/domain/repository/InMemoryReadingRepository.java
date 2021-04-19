@@ -40,4 +40,14 @@ public class InMemoryReadingRepository implements ReadingRepository {
                 .filter(reading -> reading.getType().equals(type))
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    @Override
+    public List<Reading> findReadingsBySensorIdAndTypeAndBetween(String sensorId, String type, long from, long until) {
+        return this.readings.values().stream()
+                .filter(reading -> reading.getSensorId().equals(sensorId))
+                .filter(reading -> reading.getType().equals(type))
+                .filter(reading -> reading.getTakenAt() >= from)
+                .filter(reading -> reading.getTakenAt() <= until)
+                .collect(Collectors.toUnmodifiableList());
+    }
 }

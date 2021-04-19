@@ -19,6 +19,6 @@ public class ReadingAddedDomainEventConsumer implements DomainEventConsumer<Read
     @Override
     public void consume(ReadingAddedEvent event) {
         logger.info("Received event: " + event);
-        repository.save(new Reading(event.getType(), event.getCategory(), event.getValue(), event.getTakenAt()));
+        repository.save(new Reading(event.getSensorId(), event.getType(), event.getCategory(), event.getValue(), event.getTakenAt()));
     }
 }

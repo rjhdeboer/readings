@@ -11,7 +11,8 @@ public class Car extends IotDevice {
     private final String owner;
     private final String brand;
 
-    public Car(String owner, String brand) {
+    public Car(String sensorId, String owner, String brand) {
+        super(sensorId);
         this.owner = owner;
         this.brand = brand;
     }
@@ -19,7 +20,7 @@ public class Car extends IotDevice {
     public Reading takeReading() {
         BigDecimal value = BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(0.00d, 50.00d))
                 .setScale(2, RoundingMode.HALF_UP);
-        return new Reading(ReadingType.FUEL, ReadingType.FUEL.getCategory(), value, System.currentTimeMillis());
+        return new Reading(getSensorId(), ReadingType.FUEL, ReadingType.FUEL.getCategory(), value, System.currentTimeMillis());
     }
 
     public String getOwner() {

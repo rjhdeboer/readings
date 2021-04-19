@@ -34,7 +34,7 @@ public class JacksonKafkaSerializerTest {
 
     @Test
     void shouldSerializeValidEvent() throws Exception {
-        ReadingAddedEvent event = new ReadingAddedEvent("1", "fuel", "transportation", BigDecimal.TEN, 1L);
+        ReadingAddedEvent event = new ReadingAddedEvent("car_1", "1", "fuel", "transportation", BigDecimal.TEN, 1L);
         byte[] expectedResult = new byte[0];
 
         when(objectMapper.writeValueAsBytes(event)).thenReturn(expectedResult);
@@ -46,7 +46,7 @@ public class JacksonKafkaSerializerTest {
 
     @Test
     void shouldNotSerializeOnExceptionThrown() throws Exception {
-        ReadingAddedEvent event = new ReadingAddedEvent("1", "fuel", "transportation", BigDecimal.TEN, 1L);
+        ReadingAddedEvent event = new ReadingAddedEvent("car_1", "1", "fuel", "transportation", BigDecimal.TEN, 1L);
 
         when(objectMapper.writeValueAsBytes(event)).thenThrow(new RuntimeException());
 

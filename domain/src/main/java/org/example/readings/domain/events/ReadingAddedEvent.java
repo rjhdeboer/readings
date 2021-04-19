@@ -12,6 +12,7 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReadingAddedEvent extends DomainEvent {
 
+    private final String sensorId;
     private final String type;
     private final String category;
     private final BigDecimal value;
@@ -19,24 +20,31 @@ public class ReadingAddedEvent extends DomainEvent {
 
     @JsonCreator
     public ReadingAddedEvent(@JsonProperty("id") UUID id,
+                             @JsonProperty("sensorId") String sensorId,
                              @JsonProperty("version") String version,
                              @JsonProperty("type") String type,
                              @JsonProperty("category") String category,
                              @JsonProperty("value") BigDecimal value,
                              @JsonProperty("takenAt") long takenAt) {
         super(id, version);
+        this.sensorId = sensorId;
         this.type = type;
         this.category = category;
         this.value = value;
         this.takenAt = takenAt;
     }
 
-    public ReadingAddedEvent(String version, String type, String category, BigDecimal value, long takenAt) {
+    public ReadingAddedEvent(String version, String sensorId, String type, String category, BigDecimal value, long takenAt) {
         super(version);
+        this.sensorId = sensorId;
         this.type = type;
         this.category = category;
         this.value = value;
         this.takenAt = takenAt;
+    }
+
+    public String getSensorId() {
+        return sensorId;
     }
 
     public String getType() {
@@ -58,7 +66,8 @@ public class ReadingAddedEvent extends DomainEvent {
     @Override
     public String toString() {
         return "ReadingAddedEvent{" +
-                "type='" + type + '\'' +
+                "sensorId='" + sensorId + '\'' +
+                ", type='" + type + '\'' +
                 ", category='" + category + '\'' +
                 ", value=" + value +
                 ", takenAt=" + takenAt +

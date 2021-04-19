@@ -7,16 +7,22 @@ import java.math.BigDecimal;
 
 public class Reading {
 
+    private final String sensorId;
     private final ReadingType type;
     private final ReadingCategory category;
     private final BigDecimal value;
     private final long takenAt;
 
-    public Reading(ReadingType type, ReadingCategory category, BigDecimal value, long takenAt) {
+    public Reading(String sensorId, ReadingType type, ReadingCategory category, BigDecimal value, long takenAt) {
+        this.sensorId = sensorId;
         this.type = type;
         this.category = category;
         this.value = value;
         this.takenAt = takenAt;
+    }
+
+    public String getSensorId() {
+        return sensorId;
     }
 
     public ReadingType getType() {

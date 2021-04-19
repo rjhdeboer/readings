@@ -20,8 +20,8 @@ public class AddReadingCommandProcessor implements CommandProcessor<AddReadingCo
     public void process(AddReadingCommand command) {
         // note that the command itself is not sent via Kafka, meaning that we potentially lose this command if the server
         // crashes before sending the event
-        ReadingAddedEvent event = new ReadingAddedEvent("1", command.getType(), command.getCategory(), command.getValue(),
-                command.getTakenAt());
+        ReadingAddedEvent event = new ReadingAddedEvent("1", command.getSensorId(), command.getType(), command.getCategory(),
+                command.getValue(), command.getTakenAt());
         producer.send(new ProducerRecord<>("readings", event));
     }
 }

@@ -35,7 +35,7 @@ public class ReadingCommandControllerTest {
 
     @Test
     public void shouldAcceptValidReading() throws Exception {
-        ReadingDto reading = new ReadingDto("fuel", "transportation", BigDecimal.TEN, 1L);
+        ReadingDto reading = new ReadingDto("car_1", "fuel", "transportation", BigDecimal.TEN, 1L);
 
         this.mockMvc.perform(
                 post("/readings")
@@ -47,10 +47,11 @@ public class ReadingCommandControllerTest {
 
     @Test
     public void shouldRejectInvalidReading() throws Exception {
-        verifyInvalidReadingRequest(new ReadingDto(null, "transportation", BigDecimal.TEN, 1L));
-        verifyInvalidReadingRequest(new ReadingDto("type", null, BigDecimal.TEN, 1L));
-        verifyInvalidReadingRequest(new ReadingDto("type", "transportation", null, 1L));
-        verifyInvalidReadingRequest(new ReadingDto("type", "transportation", BigDecimal.TEN, -1L));
+        verifyInvalidReadingRequest(new ReadingDto(null, "fuel", "transportation", BigDecimal.TEN, 1L));
+        verifyInvalidReadingRequest(new ReadingDto("car_1", null, "transportation", BigDecimal.TEN, 1L));
+        verifyInvalidReadingRequest(new ReadingDto("car_1", "fuel", null, BigDecimal.TEN, 1L));
+        verifyInvalidReadingRequest(new ReadingDto("car_1", "fuel", "transportation", null, 1L));
+        verifyInvalidReadingRequest(new ReadingDto("car_1", "fuel", "transportation", BigDecimal.TEN, -1L));
     }
 
     private void verifyInvalidReadingRequest(ReadingDto reading) throws Exception {

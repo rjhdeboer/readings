@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 
 public class ReadingDto {
 
+    @NotBlank(message = "Sensor id is mandatory")
+    private String sensorId;
     @NotBlank(message = "Type is mandatory")
     private String type;
     @NotBlank(message = "Category is mandatory")
@@ -19,11 +21,20 @@ public class ReadingDto {
     public ReadingDto() {
     }
 
-    public ReadingDto(String type, String category, BigDecimal value, long takenAt) {
+    public ReadingDto(String sensorId, String type, String category, BigDecimal value, long takenAt) {
+        this.sensorId = sensorId;
         this.type = type;
         this.category = category;
         this.value = value;
         this.takenAt = takenAt;
+    }
+
+    public String getSensorId() {
+        return sensorId;
+    }
+
+    public void setSensorId(String sensorId) {
+        this.sensorId = sensorId;
     }
 
     public String getType() {

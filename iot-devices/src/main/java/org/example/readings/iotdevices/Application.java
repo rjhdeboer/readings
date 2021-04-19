@@ -33,11 +33,11 @@ public class Application {
 
     @EventListener(ApplicationStartedEvent.class)
     public void registerIotDevices() {
-        devices.add(new Car("Mom", "Suzuki"));
-        devices.add(new Car("Dad", "Volkswagen"));
-        devices.add(new Car("Brother", "Audi"));
-        devices.add(new Thermostat());
-        devices.add(new HeartRateMonitor());
+        devices.add(new Car("car_mom", "Mom", "Suzuki"));
+        devices.add(new Car("car_dad", "Dad", "Volkswagen"));
+        devices.add(new Car("car_brother", "Brother", "Audi"));
+        devices.add(new Thermostat("thermostat_1"));
+        devices.add(new HeartRateMonitor("heartrate_1"));
     }
 
     @Bean

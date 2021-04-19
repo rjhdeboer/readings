@@ -4,6 +4,6 @@ public class HeartRateMonitorTest extends AbstractIotDeviceTest {
 
     @Override
     IotDevice createIotDevice() {
-        return new HeartRateMonitor();
+        return new HeartRateMonitor("heart-rate_1");
     }
 }

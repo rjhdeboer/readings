@@ -20,9 +20,15 @@ public class FetchReadingStatisticsQueryProcessor implements QueryProcessor<Fetc
 
     @Override
     public ReadingStatistics handle(FetchReadingStatisticsQuery query) {
-        List<Reading> readings = query.getType() != null ?
-            repository.findReadingsByTypeAndCategoryAndBetween(query.getType(), query.getCategory(), query.getFrom(), query.getUntil()) :
-            repository.findReadingsByCategoryAndBetween(query.getCategory(), query.getFrom(), query.getUntil());
+        List<Reading> readings;
+        if (query.getSensorId() != null) {
+            readings = repository.findReadingsBySensorIdAndTypeAndBetween(query.getSensorId(), query.getType(), query.getFrom(),
+                    query.getUntil());
+        } else {
+            readings = query.getType() != null ?
+                repository.findReadingsByTypeAndCategoryAndBetween(query.getType(), query.getCategory(), query.getFrom(), query.getUntil()) :
+                repository.findReadingsByCategoryAndBetween(query.getCategory(), query.getFrom(), query.getUntil());
+        }
 
         BigDecimal min = calculateMin(readings);
         BigDecimal max = calculateMax(readings);

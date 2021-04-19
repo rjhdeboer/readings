@@ -29,7 +29,7 @@ public class ReadingAddedDomainEventConsumerTest {
 
     @Test
     public void shouldConsumeEvent() {
-        ReadingAddedEvent event = new ReadingAddedEvent("1", "fuel", "transportation", BigDecimal.TEN, 1L);
+        ReadingAddedEvent event = new ReadingAddedEvent("car_1", "1", "fuel", "transportation", BigDecimal.TEN, 1L);
 
         consumer.consume(event);
 

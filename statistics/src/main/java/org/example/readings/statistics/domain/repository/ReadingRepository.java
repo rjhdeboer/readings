@@ -11,4 +11,6 @@ public interface ReadingRepository {
     List<Reading> findReadingsByCategoryAndBetween(String category, long from, long until);
 
     List<Reading> findReadingsByTypeAndCategoryAndBetween(String type, String category, long from, long until);
+
+    List<Reading> findReadingsBySensorIdAndTypeAndBetween(String sensorId, String type, long from, long until);
 }
